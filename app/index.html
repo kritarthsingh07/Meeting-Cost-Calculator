@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Meeting Cost App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      background: #111827;
+      color: white;
+      text-align: center;
+      font-family: Arial;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Meeting Cost Calculator</h2>
+
+<input id="salary" placeholder="Hourly Salary" type="number">
+<input id="people" placeholder="People" type="number">
+
+<br>
+
+<button onclick="start()">Start</button>
+<button onclick="stop()">Stop</button>
+
+<h3 id="cost">₹0</h3>
+
+<script>
+let total = 0;
+let interval;
+
+function start() {
+  let salary = document.getElementById("salary").value;
+  let people = document.getElementById("people").value;
+
+  let perSecond = (salary / 3600) * people;
+
+  interval = setInterval(() => {
+    total += perSecond;
+    document.getElementById("cost").innerText = "₹" + total.toFixed(2);
+  }, 1000);
+}
+
+function stop() {
+  clearInterval(interval);
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+
+</body>
+</html>
